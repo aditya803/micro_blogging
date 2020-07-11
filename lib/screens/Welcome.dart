@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'HomePage.dart';
+
 
 class WelcomePage extends StatelessWidget {
   static const String id = '/WelcomePage';
@@ -81,11 +83,11 @@ class WelcomePage extends StatelessWidget {
                       child: Center(
                         child: InkWell(
                           onTap: () {
-//                            Navigator.push(
-//                              context,
-//                              MaterialPageRoute(
-//                                  builder: (context) => LoginPage()),
-//                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                            );
                           },
                           child: Text(
                             'Sign In',
