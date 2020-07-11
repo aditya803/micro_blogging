@@ -1,3 +1,4 @@
+import 'package:microblogging/screens/ForgotPassword.dart';
 import 'package:microblogging/screens/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 
 
 class LoginPage extends StatefulWidget{
+  static const String id = '/LoginPage';
+
   @override
   LoginPageState createState() => LoginPageState();
 }
@@ -131,7 +134,11 @@ class LoginPageState extends State<LoginPage> {
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: FlatButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(context,
+                        MaterialPageRoute(builder: (context)=> ForgotPassword())
+                        );
+                      },
                       child: Text(
                         'Forgot Password?',
                         style: TextStyle(color: Colors.brown),
