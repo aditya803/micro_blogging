@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:microblogging/screens/LoginPage.dart';
+import 'package:microblogging/screens/RegisterPage.dart';
 
 import 'HomePage.dart';
 
@@ -30,13 +32,13 @@ class WelcomePage extends StatelessWidget {
 //                ),
 //              ),
               //SizedBox(height: 10.0),
-              Container(
-                height: 210.0,
-                color: Colors.transparent,
-                child:
-                Center(child: Image.asset('assets/images/Group_208.png')),
-              ),
-              SizedBox(height: 90.0),
+//              Container(
+//                height: 210.0,
+//                color: Colors.transparent,
+//                child:
+//                Center(child: Image.asset('assets/images/Group_208.png')),
+//              ),
+              SizedBox(height: 250.0),
               Padding(
                 child: Text(
                   'Welcome!',
@@ -86,7 +88,7 @@ class WelcomePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
+                                  builder: (context) => LoginPage()),
                             );
                           },
                           child: Text(
@@ -109,10 +111,10 @@ class WelcomePage extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(builder: (context) => AuthPage()),
-//                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
                     },
                     child: Text(
                       'Create Account',

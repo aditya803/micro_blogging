@@ -92,7 +92,7 @@ class LoginPageState extends State<LoginPage> {
 //                    child: Image.asset('assets/images/Group 208.png')
 //                ),
 //              ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 250.0),
               Padding(
                 child: Text(
                   'Existing User..',
