@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:microblogging/models/recommendations.dart';
+import 'package:microblogging/screens/SideNav.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,39 +20,44 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.brown.shade600,
+        title: Text('Blogging app'),
+      ), 
+      drawer: navBar(),
       body: SafeArea(
         child: Container(
           color: Color(0xFFB79389),
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[
-              Container(
-                height: 57.6,
-                margin: EdgeInsets.only(top: 28.8,left: 28.8,right: 28.8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    //custom navigation drawer and search button
-                    Container(
-                      height: 57.6,
-                      width: 57.6,
-                      padding: EdgeInsets.all(18),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(9.6),
-                          color: Color(0x080a0928)),
-                      child: SvgPicture.asset("assets/svg/menu.svg"),
-                    ),
-                    Container(
-                      height: 57.6,
-                      width: 57.6,
-                      padding: EdgeInsets.all(18),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(9.6),
-                        color: Color(0x080a0928),
-                      ),
-                      child: SvgPicture.asset("assets/svg/search.svg"),
-                    )
-                  ],
-                ),
-              ),
+//              Container(
+//                height: 57.6,
+//                margin: EdgeInsets.only(top: 28.8,left: 28.8,right: 28.8),
+//                child: Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                  children: <Widget>[
+//                    //custom navigation drawer and search button
+//                    Container(
+//                      height: 57.6,
+//                      width: 57.6,
+//                      padding: EdgeInsets.all(18),
+//                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(9.6),
+//                          color: Color(0x080a0928)),
+//                      child: SvgPicture.asset("assets/svg/menu.svg"),
+//                    ),
+//                    Container(
+//                      height: 57.6,
+//                      width: 57.6,
+//                      padding: EdgeInsets.all(18),
+//                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(9.6),
+//                        color: Color(0x080a0928),
+//                      ),
+//                      child: SvgPicture.asset("assets/svg/search.svg"),
+//                    )
+//                  ],
+//                ),
+//              ),
               //Text Widget for title
               Padding(padding: EdgeInsets.only(top: 48,left: 28.8),
                 child: Text("Find\nYour Genre",style: GoogleFonts.playfairDisplay(
