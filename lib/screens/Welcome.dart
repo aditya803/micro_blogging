@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:microblogging/screens/LoginPage.dart';
 
 import 'HomePage.dart';
 
@@ -86,7 +87,7 @@ class WelcomePage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
+                                  builder: (context) => LoginPage()),
                             );
                           },
                           child: Text(

@@ -2,6 +2,7 @@ import 'package:microblogging/screens/ForgotPassword.dart';
 import 'package:microblogging/screens/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:microblogging/screens/RegisterPage.dart';
 
 
 
@@ -187,10 +188,10 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   InkWell(
                     onTap: (){
-//                      Navigator.push(
-//                        context,
-//                        MaterialPageRoute(builder: (context) => ),
-//                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                      );
                     },
                     child: Text(
                       'Sign Up',
