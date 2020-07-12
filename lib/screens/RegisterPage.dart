@@ -60,21 +60,21 @@ class RegisterPageState extends State<RegisterPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              height: 100.0,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/Exclusion 1.png'),
-                    fit: BoxFit.cover),
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Container(
-              height: 207.0,
-              color: Colors.transparent,
-              child: Center(child: Image.asset('assets/images/Group 208.png')),
-            ),
-            SizedBox(height: 20.0),
+//            Container(
+//              height: 100.0,
+//              decoration: BoxDecoration(
+//                image: DecorationImage(
+//                    image: AssetImage('assets/images/Exclusion 1.png'),
+//                    fit: BoxFit.cover),
+//              ),
+//            ),
+//            SizedBox(height: 10.0),
+//            Container(
+//              height: 207.0,
+//              color: Colors.transparent,
+//              child: Center(child: Image.asset('assets/images/Group 208.png')),
+//            ),
+            SizedBox(height: 250.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 35.0),
               child: Text(

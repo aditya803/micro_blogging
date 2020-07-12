@@ -53,7 +53,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   )
                 ],
               ),
-              SizedBox(height: 220.0),
+              SizedBox(height: 100.0),
               Padding(
                 child: Text(
                   'Forgot Password',

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:microblogging/screens/ProfilePage.dart';
 
+
 class navBar extends StatelessWidget {
   @override
 
