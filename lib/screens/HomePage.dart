@@ -21,13 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.brown.shade600,
-        title: Text('Blogging app'),
-      ), 
+
+        backgroundColor:Color(0xFFD5A893),
+        title: Text('Blogging app',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
+      ),
       drawer: navBar(),
       body: SafeArea(
         child: Container(
-          color: Color(0xFFB79389),
+
           child: ListView(
             physics: BouncingScrollPhysics(),
             children: <Widget>[
@@ -62,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(padding: EdgeInsets.only(top: 48,left: 28.8),
                 child: Text("Find\nYour Genre",style: GoogleFonts.playfairDisplay(
                     fontSize: 45.6,
-                    fontWeight: FontWeight.w700
+                    fontWeight: FontWeight.w700,
+                  color: Colors.brown.shade600
                 ),),
               ),
 
@@ -128,8 +130,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(padding: EdgeInsets.only(left:28.8,top: 28.8 ),
                 child: SmoothPageIndicator(controller: _pageController,count: recommendations.length,
                   effect: ExpandingDotsEffect(
-                      activeDotColor: Color(0xFF8a8a8a),
-                      dotColor: Color(0xFFababab),
+                      activeDotColor: Colors.brown.shade600,
+                      dotColor: Color(0xFFD5A893),
                       dotHeight: 4.8,
                       dotWidth: 6,
                       spacing: 4.8

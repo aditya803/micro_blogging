@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:microblogging/screens/ProfilePage.dart';
+
 
 class navBar extends StatelessWidget {
   @override
@@ -95,7 +97,12 @@ class navBar extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 50.0),
-                itemTile('My Blogs', (){}),
+                itemTile('My Blogs', (){
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                      );
+                }),
                 itemTile('Settings', (){}),
                 itemTile('Log Out', (){}),
               ],
