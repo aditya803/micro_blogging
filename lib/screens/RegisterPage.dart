@@ -11,42 +11,8 @@ class RegisterPage extends StatefulWidget {
 class RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
-    Widget socialBtn(Function onTap, AssetImage logo) {
-      return GestureDetector(
-        onTap: onTap,
-        child: Container(
-          height: 51.0,
-          width: 51.0,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-            image: DecorationImage(
-              image: logo,
-            ),
-          ),
-        ),
-      );
-    }
-
-    Widget socialBtnRow() {
-      return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 118.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            socialBtn(() => print('fb log in'),
-                AssetImage('assets/Images/facebook-2.png')),
-            Text(
-              'OR',
-              style: TextStyle(color: Colors.white),
-            ),
-            socialBtn(() => print('g+ log in'),
-                AssetImage('assets/Images/google-icon.png')),
-          ],
-        ),
-      );
-    }
-
+    bool vis = true;
+    final _globalkey = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
@@ -74,7 +40,7 @@ class RegisterPageState extends State<RegisterPage> {
 //              color: Colors.transparent,
 //              child: Center(child: Image.asset('assets/images/Group 208.png')),
 //            ),
-            SizedBox(height: 250.0),
+            SizedBox(height: 150.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 35.0),
               child: Text(
@@ -86,92 +52,125 @@ class RegisterPageState extends State<RegisterPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(37.5, 0.0, 37.5, 0.0),
+            Form(
+              key: _globalkey,
               child: Column(
-                children: [
-                  SizedBox(height: 10.0),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        flex: 5,
-                        child: TextField(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(37.5, 0.0, 37.5, 0.0),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 10.0),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              flex: 5,
+                              child: TextFormField(
+                                validator: (value){
+                                  if(value.isEmpty)
+                                    return "First name can't be empty";
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  labelText: 'First Name',
+                                  labelStyle: TextStyle(color: Colors.grey[400]),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10.0),
+                            Expanded(
+                              flex: 5,
+                              child: TextFormField(
+                                validator: (value){
+                                  if(value.isEmpty)
+                                    return "Last name can't be empty";
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                  labelText: 'Last Name',
+                                  labelStyle: TextStyle(color: Colors.grey[400]),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextFormField(
+                          validator: (value){
+                            if(value.isEmpty)
+                              return "E-mail can't be empty";
+                            if(!value.contains("@"))
+                              return "E-mail is invalid";
+                            return null;
+                          },
                           decoration: InputDecoration(
-                            labelText: 'First Name',
+                            labelText: 'E-mail/Mobile Number',
                             labelStyle: TextStyle(color: Colors.grey[400]),
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(height: 10.0),
+                        TextFormField(
+                          obscureText: vis,
+                          validator: (value){
+                            if(value.isEmpty)
+                              return "Password can't be empty";
+                            if(value.length <8)
+                              return "Password can't be less than 8 characters";
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(icon: Icon(vis? Icons.visibility_off: Icons.visibility),
+                              onPressed: (){
+                              setState(() {
+                                vis = !vis;
+                              });
+                              },
+                            ),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
+                              color: Colors.grey[400],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 28.0),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 60.0),
+                    child: Container(
+                      height: 45.0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(100.0),
+                        ),
+                      ),
+                      child: Center(
+                        child: InkWell(
+                          onTap: () {
+                            if(_globalkey.currentState.validate()){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context)=> HomeScreen())
+                              );
+                            }
+
+                          },
+                          child: Text(
+                            'Log In',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.brown,
+                            ),
                           ),
                         ),
                       ),
-                      SizedBox(width: 10.0),
-                      Expanded(
-                        flex: 5,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Last Name',
-                            labelStyle: TextStyle(color: Colors.grey[400]),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'E-mail/Mobile Number',
-                      labelStyle: TextStyle(color: Colors.grey[400]),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  SizedBox(height: 10.0),
-                  TextField(
-    
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        color: Colors.grey[400],
-                      ),
                     ),
                   ),
-                  SizedBox(height: 28.0),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0),
-              child: Container(
-                height: 45.0,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(100.0),
-                  ),
-                ),
-                child: Center(
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context)=> HomeScreen())
-                      );
-                    },
-                    child: Text(
-                      'Log In',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.brown,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 45.0),
-            socialBtnRow(),
-            SizedBox(height: 2.0),
-            Text(
-              '(Sign In via Social Media)',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
-            ),
+              )
+            )
           ],
         ),
       ),
