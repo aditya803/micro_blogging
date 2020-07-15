@@ -16,6 +16,9 @@ class RegisterPageState extends State<RegisterPage> {
   final _lastNameController = TextEditingController();
   NetworkHandling networkHandling = NetworkHandling();
   bool vis = true;
+  bool circular = false;
+  bool validator =false;
+  String errorText;
   final _globalkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -121,14 +124,8 @@ class RegisterPageState extends State<RegisterPage> {
                         TextFormField(
                           controller: _passController,
                           obscureText: vis,
-                          validator: (value){
-                            if(value.isEmpty)
-                              return "Password can't be empty";
-                            if(value.length <8)
-                              return "Password can't be less than 8 characters";
-                            return null;
-                          },
                           decoration: InputDecoration(
+                            errorText: validator? null: errorText,
                             suffixIcon: IconButton(icon: Icon(vis? Icons.visibility_off: Icons.visibility),
                               onPressed: (){
                               setState(() {
@@ -148,7 +145,7 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 60.0),
-                    child: Container(
+                    child: circular? CircularProgressIndicator():Container(
                       height: 45.0,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -158,8 +155,12 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                       child: Center(
                         child: InkWell(
-                          onTap: () {
-                            if(_globalkey.currentState.validate()){
+                          onTap: () async{
+                            setState(() {
+                              circular = true;
+                            });
+                            await checkUser();
+                            if(_globalkey.currentState.validate() && validator){
 //                              Navigator.push(
 //                                  context,
 //                                  MaterialPageRoute(builder: (context)=> HomeScreen())
@@ -171,9 +172,16 @@ class RegisterPageState extends State<RegisterPage> {
                               "Password": _passController.text
                             };
                             //print(data);
-                             //TODO: add url to store info of user here: networkHandling.post(url, body);
+                             //TODO: add url to store info of user here: await networkHandling.post(url, data);
+                            setState(() {
+                              circular = false;
+                            });
                             }
-
+                            else{
+                              setState(() {
+                                circular = false;
+                              });
+                            }
                           },
                           child: Text(
                             'Sign Up',
@@ -193,5 +201,31 @@ class RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+  checkUser() async{
+    if(_emailController.text.length==0){
+      setState(() {
+        validator =false;
+        circular = false;
+        errorText = "Please enter an email";
+      });
+    }
+    else{
+      var response = await networkHandling.get
+        ("/user/checkUserName/${_emailController.text}");
+      if(response["Status"])
+      {
+        setState(() {
+          validator =false;
+          circular = false;
+          errorText = "An account of this Email id already exists";
+        });
+      }
+      else{
+        setState(() {
+          validator =true;
+        });
+      }
+    }
   }
 }
