@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:microblogging/models/NetworkHandling.dart';
 import 'package:microblogging/screens/HomePage.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -9,10 +10,15 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
+  final _emailController = TextEditingController();
+  final _passController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  NetworkHandling networkHandling = NetworkHandling();
+  bool vis = true;
+  final _globalkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    bool vis = true;
-    final _globalkey = GlobalKey<FormState>();
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       body: Container(
@@ -66,6 +72,7 @@ class RegisterPageState extends State<RegisterPage> {
                             Expanded(
                               flex: 5,
                               child: TextFormField(
+                                controller: _firstNameController,
                                 validator: (value){
                                   if(value.isEmpty)
                                     return "First name can't be empty";
@@ -81,6 +88,7 @@ class RegisterPageState extends State<RegisterPage> {
                             Expanded(
                               flex: 5,
                               child: TextFormField(
+                                controller: _lastNameController,
                                 validator: (value){
                                   if(value.isEmpty)
                                     return "Last name can't be empty";
@@ -95,6 +103,7 @@ class RegisterPageState extends State<RegisterPage> {
                           ],
                         ),
                         TextFormField(
+                          controller: _emailController,
                           validator: (value){
                             if(value.isEmpty)
                               return "E-mail can't be empty";
@@ -110,6 +119,7 @@ class RegisterPageState extends State<RegisterPage> {
                         ),
                         SizedBox(height: 10.0),
                         TextFormField(
+                          controller: _passController,
                           obscureText: vis,
                           validator: (value){
                             if(value.isEmpty)
@@ -150,15 +160,23 @@ class RegisterPageState extends State<RegisterPage> {
                         child: InkWell(
                           onTap: () {
                             if(_globalkey.currentState.validate()){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context)=> HomeScreen())
-                              );
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(builder: (context)=> HomeScreen())
+//                              );
+                            Map<String, String> data = {
+                              "First Name": _firstNameController.text,
+                              "Last Name": _lastNameController.text,
+                              "E-mail": _emailController.text,
+                              "Password": _passController.text
+                            };
+                            //print(data);
+                             //TODO: add url to store info of user here: networkHandling.post(url, body);
                             }
 
                           },
                           child: Text(
-                            'Log In',
+                            'Sign Up',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.brown,

@@ -14,8 +14,8 @@ class LoginPage extends StatefulWidget{
 }
 class LoginPageState extends State<LoginPage> {
 
-//  final _emailController = TextEditingController();
-//  final _passController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passController = TextEditingController();
 //  bool validate1=false;
 //  bool validate2=false
 
