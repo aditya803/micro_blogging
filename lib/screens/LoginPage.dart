@@ -1,3 +1,4 @@
+import 'package:microblogging/models/NetworkHandling.dart';
 import 'package:microblogging/screens/ForgotPassword.dart';
 import 'package:microblogging/screens/HomePage.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,16 +14,17 @@ class LoginPage extends StatefulWidget{
   LoginPageState createState() => LoginPageState();
 }
 class LoginPageState extends State<LoginPage> {
-
+  NetworkHandling networkHandling = NetworkHandling();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
-//  bool validate1=false;
-//  bool validate2=false
+  bool validator= false;
+  bool circular= false;
+  String errorText;
+  bool vis = true;
+  final _globalkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    bool vis = true;
-    final _globalkey = GlobalKey<FormState>();
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Container(
@@ -74,6 +76,7 @@ class LoginPageState extends State<LoginPage> {
                       children: <Widget>[
                         SizedBox(height: 10.0),
                         TextFormField(
+                          controller: _emailController,
                           validator: (value){
                             if(value.isEmpty)
                               return "E-mail can't be empty";
@@ -90,6 +93,7 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 10.0),
                         TextFormField(
+                          controller: _passController,
                           validator: (value){
                             if(value.isEmpty)
                               return "Password can't be empty";
@@ -134,7 +138,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20.0),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 60.0),
-                    child: Container(
+                    child: circular? CircularProgressIndicator():Container(
                         height: 45.0,
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -142,10 +146,21 @@ class LoginPageState extends State<LoginPage> {
                         ),
                         child: Center(
                           child: InkWell(
-                            onTap: (){
-                              if(_globalkey.currentState.validate())
+                            onTap: () async{
+                              setState(() {
+                                circular =true;
+                              });
+                              await checkUser();
+                              if(_globalkey.currentState.validate()&& validator)
                               {
-                                print("Validated");
+                                setState(() {
+                                  circular = false;
+                                });
+                              }
+                              else{
+                                setState(() {
+                                  circular = false;
+                                });
                               }
 //                              Navigator.push(
 //                                context,
@@ -192,5 +207,31 @@ class LoginPageState extends State<LoginPage> {
           )
         )
     );
+  }
+  checkUser() async{
+    if(_emailController.text.length==0){
+      setState(() {
+        validator =false;
+        circular = false;
+        errorText = "Please enter an email";
+      });
+    }
+    else{
+      var response = await networkHandling.get
+        ("/user/checkUserName/${_emailController.text}");
+      if(response["Status"])
+      {
+        setState(() {
+          validator =false;
+          circular = false;
+          errorText = "An account of this Email id already exists";
+        });
+      }
+      else{
+        setState(() {
+          validator =true;
+        });
+      }
+    }
   }
 }
