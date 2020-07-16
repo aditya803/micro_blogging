@@ -171,7 +171,7 @@ class RegisterPageState extends State<RegisterPage> {
                               "email" : _emailController.text,
                               "password" : _passController.text,
                             };
-                            //TODO: add url to login file here 
+                            //TODO: add url to login file here
                             var response = await networkHandling.post(url, data);
                             if(response.statusCode == 200|| response.statusCode == 201){
                               Map <String, dynamic> output = json.decode(response.body);
