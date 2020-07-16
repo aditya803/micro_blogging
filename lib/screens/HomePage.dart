@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:microblogging/models/recommendations.dart';
+import 'package:microblogging/screens/Editor.dart';
 import 'package:microblogging/screens/SideNav.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -141,7 +142,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
             ],
           ),
+
         ),
+
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Editor()),
+          );
+        },
+        child: Icon(Icons.event_note, color: Colors.white,),
+        backgroundColor:Colors.brown.shade600,
       ),
     );
   }
