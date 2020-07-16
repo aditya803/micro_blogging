@@ -162,10 +162,10 @@ class LoginPageState extends State<LoginPage> {
                                   circular = false;
                                 });
                               }
-//                              Navigator.push(
-//                                context,
-//                                MaterialPageRoute(builder: (context) => HomeScreen()),
-//                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => HomeScreen()),
+                              );
                             },
                             child: Text(
                               'Log In',

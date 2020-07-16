@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:microblogging/screens/Editor.dart';
 import 'package:microblogging/screens/ProfilePage.dart';
 
 
@@ -92,7 +93,7 @@ class navBar extends StatelessWidget {
                   onTap: (){},
                   child: CircleAvatar(
                     radius: 50.0,
-                    backgroundImage: AssetImage('assets/Images/dp.jpg'),
+                    backgroundImage: NetworkImage("https://miro.medium.com/max/2560/1*EdiYhIyg-QR-QsojYoVd4A.jpeg"),
                     backgroundColor: Color(0xFFB79389),
                   ),
                 ),
@@ -102,6 +103,12 @@ class navBar extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => ProfilePage()),
                       );
+                }),
+                itemTile('Write a blog.', (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Editor()),
+                  );
                 }),
                 itemTile('Settings', (){}),
                 itemTile('Log Out', (){}),
