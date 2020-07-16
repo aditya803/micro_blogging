@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:microblogging/models/NetworkHandling.dart';
 import 'package:microblogging/screens/HomePage.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class RegisterPage extends StatefulWidget {
   
@@ -20,6 +23,7 @@ class RegisterPageState extends State<RegisterPage> {
   bool validator =false;
   String errorText;
   final _globalkey = GlobalKey<FormState>();
+  final storage = new FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -152,21 +156,44 @@ class RegisterPageState extends State<RegisterPage> {
                         });
                         await checkUser();
                         if(_globalkey.currentState.validate() && validator){
-//                              Navigator.push(
-//                                  context,
-//                                  MaterialPageRoute(builder: (context)=> HomeScreen())
-//                              );
                           Map<String, String> data = {
                             "First Name": _firstNameController.text,
                             "Last Name": _lastNameController.text,
                             "E-mail": _emailController.text,
                             "Password": _passController.text
                           };
-                          //print(data);
-                          //TODO: add url to store info of user here: await networkHandling.post(url, data);
-                          setState(() {
-                            circular = false;
-                          });
+                          print(data);
+                          //TODO: add url to store info of user here:
+                          var responseRegister = await networkHandling.post(url, data);
+                          //TODO: add status code for successful login here
+                          if(responseRegister.statusCode== 200|| responseRegister.statusCode==201){
+                            Map<String, String> data = {
+                              "email" : _emailController.text,
+                              "password" : _passController.text,
+                            };
+                            //TODO: add url to login file here 
+                            var response = await networkHandling.post(url, data);
+                            if(response.statusCode == 200|| response.statusCode == 201){
+                              Map <String, dynamic> output = json.decode(response.body);
+                              print(output["token"]);
+                              await storage.write(key: "token", value: output["token"]);
+                              setState(() {
+                                validator = true;
+                                circular = false;
+                              });
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            }
+                            else{
+                              Scaffold.of(context).showSnackBar(
+                                  SnackBar(content: Text("Network Error"))
+                              );
+                            }
+                          }
+                          else{
+                            setState(() {
+                              circular = false;
+                            });
+                          }
                         }
                         else{
                           setState(() {
@@ -230,33 +257,3 @@ class RegisterPageState extends State<RegisterPage> {
   }
 }
 
-/*
-onTap: () async{
-                            setState(() {
-                              circular = true;
-                            });
-                            await checkUser();
-                            if(_globalkey.currentState.validate() && validator){
-//                              Navigator.push(
-//                                  context,
-//                                  MaterialPageRoute(builder: (context)=> HomeScreen())
-//                              );
-                            Map<String, String> data = {
-                              "First Name": _firstNameController.text,
-                              "Last Name": _lastNameController.text,
-                              "E-mail": _emailController.text,
-                              "Password": _passController.text
-                            };
-                            //print(data);
-                             //TODO: add url to store info of user here: await networkHandling.post(url, data);
-                            setState(() {
-                              circular = false;
-                            });
-                            }
-                            else{
-                              setState(() {
-                                circular = false;
-                              });
-                            }
-                          },
- */

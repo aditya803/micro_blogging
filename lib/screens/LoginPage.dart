@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:microblogging/models/NetworkHandling.dart';
 import 'package:microblogging/screens/ForgotPassword.dart';
 import 'package:microblogging/screens/HomePage.dart';
@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget{
   LoginPageState createState() => LoginPageState();
 }
 class LoginPageState extends State<LoginPage> {
+
   NetworkHandling networkHandling = NetworkHandling();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
@@ -24,6 +25,7 @@ class LoginPageState extends State<LoginPage> {
   String errorText;
   bool vis = true;
   final _globalkey = GlobalKey<FormState>();
+  final storage = new FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
@@ -149,10 +151,12 @@ class LoginPageState extends State<LoginPage> {
                         if(response.statusCode== 200|| response.statusCode==201){
                           Map <String, dynamic> output = json.decode(response.body);
                           print(output["token"]);
+                          storage.write(key: "token", value: output["token"]);
                           setState(() {
                             validator = true;
                             circular = false;
                           });
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                         }
                         else{
                           String output = json.decode(response.body);
