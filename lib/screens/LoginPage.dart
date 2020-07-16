@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:microblogging/models/NetworkHandling.dart';
 import 'package:microblogging/screens/ForgotPassword.dart';
 import 'package:microblogging/screens/HomePage.dart';
@@ -94,15 +96,9 @@ class LoginPageState extends State<LoginPage> {
                         SizedBox(height: 10.0),
                         TextFormField(
                           controller: _passController,
-                          validator: (value){
-                            if(value.isEmpty)
-                              return "Password can't be empty";
-                            if(value.length <8)
-                              return "Password can't be less than 8 characters";
-                            return null;
-                          },
                           obscureText: vis,
                           decoration: InputDecoration(
+                              errorText: validator? null:errorText,
                               suffixIcon: IconButton(icon: Icon(vis ? Icons.visibility_off : Icons.visibility),
                                 onPressed: (){
                                   setState(() {
@@ -138,40 +134,48 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 20.0),
                 Padding(padding: EdgeInsets.symmetric(horizontal: 60.0),
-                    child: circular? CircularProgressIndicator():Container(
-                        height: 45.0,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(100.0))
-                        ),
-                        child: Center(
-                          child: InkWell(
-                            onTap: () async{
-                              setState(() {
-                                circular =true;
-                              });
-                              await checkUser();
-                              if(_globalkey.currentState.validate()&& validator)
-                              {
-                                setState(() {
-                                  circular = false;
-                                });
-                              }
-                              else{
-                                setState(() {
-                                  circular = false;
-                                });
-                              }
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => HomeScreen()),
-                              );
-                            },
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.brown),),
+                    child: InkWell(
+                      onTap: () async{
+                        setState(() {
+                          circular = true;
+                        });
+                        Map<String, String> data={
+                          "E-mail": _emailController.text,
+                          "Password": _passController.text
+                        };
+                        //TODO: add url of sign in doc here:
+                        var response = await networkHandling.post(url, data);
+                        //TODO: add status code for successful login here
+                        if(response.statusCode== 200|| response.statusCode==201){
+                          Map <String, dynamic> output = json.decode(response.body);
+                          print(output["token"]);
+                          setState(() {
+                            validator = true;
+                            circular = false;
+                          });
+                        }
+                        else{
+                          String output = json.decode(response.body);
+                          setState(() {
+                            validator = false;
+                            errorText = output;
+                            circular = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                          height: 45.0,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(100.0))
                           ),
-                        )
+                          child: Center(
+                            child: circular? CircularProgressIndicator():Text(
+                              'Log In',
+                              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.brown),
+                            ),
+                          )
+                      ),
                     )
                 ),
                 SizedBox(height: 30.0),

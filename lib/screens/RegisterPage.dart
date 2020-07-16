@@ -145,45 +145,45 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 60.0),
-                    child: circular? CircularProgressIndicator():Container(
-                      height: 45.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(100.0),
-                        ),
-                      ),
-                      child: Center(
-                        child: InkWell(
-                          onTap: () async{
-                            setState(() {
-                              circular = true;
-                            });
-                            await checkUser();
-                            if(_globalkey.currentState.validate() && validator){
+                    child: InkWell(
+                      onTap: () async{
+                        setState(() {
+                          circular = true;
+                        });
+                        await checkUser();
+                        if(_globalkey.currentState.validate() && validator){
 //                              Navigator.push(
 //                                  context,
 //                                  MaterialPageRoute(builder: (context)=> HomeScreen())
 //                              );
-                            Map<String, String> data = {
-                              "First Name": _firstNameController.text,
-                              "Last Name": _lastNameController.text,
-                              "E-mail": _emailController.text,
-                              "Password": _passController.text
-                            };
-                            //print(data);
-                             //TODO: add url to store info of user here: await networkHandling.post(url, data);
-                            setState(() {
-                              circular = false;
-                            });
-                            }
-                            else{
-                              setState(() {
-                                circular = false;
-                              });
-                            }
-                          },
-                          child: Text(
+                          Map<String, String> data = {
+                            "First Name": _firstNameController.text,
+                            "Last Name": _lastNameController.text,
+                            "E-mail": _emailController.text,
+                            "Password": _passController.text
+                          };
+                          //print(data);
+                          //TODO: add url to store info of user here: await networkHandling.post(url, data);
+                          setState(() {
+                            circular = false;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            circular = false;
+                          });
+                        }
+                      },
+                      child: Container(
+                        height: 45.0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(100.0),
+                          ),
+                        ),
+                        child: Center(
+                          child: circular? CircularProgressIndicator():Text(
                             'Sign Up',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -192,7 +192,7 @@ class RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ),
                 ],
               )
@@ -229,3 +229,34 @@ class RegisterPageState extends State<RegisterPage> {
     }
   }
 }
+
+/*
+onTap: () async{
+                            setState(() {
+                              circular = true;
+                            });
+                            await checkUser();
+                            if(_globalkey.currentState.validate() && validator){
+//                              Navigator.push(
+//                                  context,
+//                                  MaterialPageRoute(builder: (context)=> HomeScreen())
+//                              );
+                            Map<String, String> data = {
+                              "First Name": _firstNameController.text,
+                              "Last Name": _lastNameController.text,
+                              "E-mail": _emailController.text,
+                              "Password": _passController.text
+                            };
+                            //print(data);
+                             //TODO: add url to store info of user here: await networkHandling.post(url, data);
+                            setState(() {
+                              circular = false;
+                            });
+                            }
+                            else{
+                              setState(() {
+                                circular = false;
+                              });
+                            }
+                          },
+ */

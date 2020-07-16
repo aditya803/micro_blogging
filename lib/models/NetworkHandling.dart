@@ -24,18 +24,14 @@ class NetworkHandling{
   }
 
   //putting data into database
-  Future<dynamic> post(String url, Map<String,String>body) async{
+  Future<http.Response> post(String url, Map<String,String>body) async{
 
     url = formatter(url);
     var response = await http.post(
         url,
         //TODO: Look into this:  headers: ("Content-type": "application/json"),
-        body: json.encode(body));
-    if(response.statusCode== 200 || response.statusCode == 201){
-      log.i(response.body);
-      return response;
-    }
-    log.d(response.body);
-    log.i(response.statusCode);
+        body: json.encode(body)
+    );
+    return response;
   }
 }
